@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Calendar, Clock, MapPin, Flower2, Crown, Heart, Sparkles } from 'lucide-react';
+import haldiImage from '@/assets/haldi-event.jpg';
+import baraatImage from '@/assets/baraat-event.jpg';
+import weddingImage from '@/assets/wedding-event.jpg';
+import phereImage from '@/assets/phere-event.jpg';
 
 const EventsSection = () => {
   const [visibleCards, setVisibleCards] = useState<number[]>([]);
@@ -14,7 +18,7 @@ const EventsSection = () => {
       time: '10:00 AM',
       venue: 'Garden Manor Courtyard',
       icon: Flower2,
-      gradient: 'from-yellow-400 to-orange-500'
+      image: haldiImage
     },
     {
       title: 'Baraat',
@@ -23,7 +27,7 @@ const EventsSection = () => {
       time: '3:00 PM',
       venue: 'Garden Manor Entrance',
       icon: Crown,
-      gradient: 'from-accent to-rose'
+      image: baraatImage
     },
     {
       title: 'Wedding',
@@ -32,7 +36,7 @@ const EventsSection = () => {
       time: '4:00 PM',
       venue: 'Garden Manor Main Hall',
       icon: Heart,
-      gradient: 'from-rose to-pink-500'
+      image: weddingImage
     },
     {
       title: 'Phere',
@@ -41,7 +45,7 @@ const EventsSection = () => {
       time: '5:00 PM',
       venue: 'Garden Manor Sacred Space',
       icon: Sparkles,
-      gradient: 'from-purple-500 to-accent'
+      image: phereImage
     }
   ];
 
@@ -68,11 +72,11 @@ const EventsSection = () => {
   }, []);
 
   return (
-    <section id="events" ref={sectionRef} className="py-20 bg-gradient-to-b from-background to-background/50 relative overflow-hidden">
+    <section id="events" ref={sectionRef} className="py-20 bg-background relative overflow-hidden">
       {/* Background Decorations */}
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-10 right-20 w-40 h-40 rounded-full bg-rose"></div>
-        <div className="absolute bottom-10 left-20 w-32 h-32 rounded-full bg-accent"></div>
+        <div className="absolute top-10 right-20 w-40 h-40 rounded-full bg-accent"></div>
+        <div className="absolute bottom-10 left-20 w-32 h-32 rounded-full bg-rose"></div>
       </div>
 
       {/* Floating Decorative Elements */}
@@ -115,45 +119,50 @@ const EventsSection = () => {
                 style={{ transitionDelay: `${index * 150}ms` }}
               >
                 <div className="glass-effect rounded-2xl overflow-hidden hover-lift group">
-                  {/* Event Header */}
-                  <div className={`h-24 bg-gradient-to-r ${event.gradient} relative overflow-hidden`}>
-                    <div className="absolute inset-0 bg-black/10"></div>
-                    <div className="relative z-10 h-full flex items-center justify-between px-8">
-                      <div className="flex items-center space-x-4">
-                        <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                          <Icon className="w-6 h-6 text-white" />
-                        </div>
-                        <h3 className="font-heading text-2xl font-medium text-white">
-                          {event.title}
-                        </h3>
+                  {/* Event Image */}
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={event.image}
+                      alt={event.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
+                    
+                    {/* Event Title Overlay */}
+                    <div className="absolute bottom-4 left-6 flex items-center space-x-3">
+                      <div className="w-10 h-10 rounded-full glass-effect flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-accent" />
                       </div>
+                      <h3 className="font-heading text-2xl font-medium text-white">
+                        {event.title}
+                      </h3>
                     </div>
                   </div>
 
                   {/* Event Content */}
-                  <div className="p-8">
-                    <p className="text-muted-foreground leading-relaxed mb-6">
+                  <div className="p-6">
+                    <p className="text-muted-foreground leading-relaxed mb-6 text-sm">
                       {event.description}
                     </p>
 
                     {/* Event Details */}
                     <div className="space-y-3">
                       <div className="flex items-center text-sm text-muted-foreground">
-                        <Calendar className="w-4 h-4 text-accent mr-3" />
+                        <Calendar className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
                         <span>{event.date}</span>
                       </div>
                       <div className="flex items-center text-sm text-muted-foreground">
-                        <Clock className="w-4 h-4 text-accent mr-3" />
+                        <Clock className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
                         <span>{event.time}</span>
                       </div>
                       <div className="flex items-center text-sm text-muted-foreground">
-                        <MapPin className="w-4 h-4 text-accent mr-3" />
+                        <MapPin className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
                         <span>{event.venue}</span>
                       </div>
                     </div>
 
                     {/* Decorative Border */}
-                    <div className={`mt-6 h-1 bg-gradient-to-r ${event.gradient} rounded-full opacity-60`}></div>
+                    <div className="mt-6 h-px bg-gradient-to-r from-transparent via-accent/30 to-transparent"></div>
                   </div>
                 </div>
               </div>
@@ -163,7 +172,7 @@ const EventsSection = () => {
 
         {/* Bottom Text */}
         <div className="text-center mt-16">
-          <p className="text-muted-foreground italic max-w-2xl mx-auto">
+          <p className="text-muted-foreground italic max-w-2xl mx-auto font-light">
             Each ceremony holds special significance in our journey together. 
             We invite you to be part of these sacred and joyous moments.
           </p>
