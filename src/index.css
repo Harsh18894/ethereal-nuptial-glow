@@ -1,42 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Sophisticated Wedding Design System */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Elegant Color Palette */
+    --background: 28 20% 97%;
+    --foreground: 220 15% 15%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 28 30% 98%;
+    --card-foreground: 220 15% 15%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 28 30% 98%;
+    --popover-foreground: 220 15% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Deep Charcoal Primary */
+    --primary: 220 20% 20%;
+    --primary-foreground: 28 30% 98%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Warm Ivory Secondary */
+    --secondary: 28 25% 92%;
+    --secondary-foreground: 220 15% 25%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Soft Muted Tones */
+    --muted: 28 15% 90%;
+    --muted-foreground: 220 10% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Champagne Gold Accent */
+    --accent: 42 30% 75%;
+    --accent-foreground: 220 20% 15%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Rose Undertones */
+    --rose: 350 25% 80%;
+    --rose-foreground: 220 20% 15%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 28 30% 98%;
 
-    --radius: 0.5rem;
+    --border: 28 15% 88%;
+    --input: 28 15% 88%;
+    --ring: 42 30% 75%;
+
+    --radius: 0.75rem;
+
+    /* Elegant Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(var(--background)), hsl(var(--secondary)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--rose)));
+    --gradient-overlay: linear-gradient(180deg, transparent 0%, hsl(var(--background) / 0.8) 100%);
+
+    /* Sophisticated Shadows */
+    --shadow-elegant: 0 20px 60px -10px hsl(var(--primary) / 0.15);
+    --shadow-soft: 0 10px 30px -5px hsl(var(--primary) / 0.08);
+    --shadow-accent: 0 15px 40px -10px hsl(var(--accent) / 0.3);
+
+    /* Smooth Transitions */
+    --transition-elegant: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +124,48 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-body antialiased;
+    font-feature-settings: "liga", "clig", "kern";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer components {
+  /* Elegant Animation Classes */
+  .animate-fade-in {
+    @apply opacity-0 animate-[fade-in_0.8s_ease-out_forwards];
+  }
+
+  .animate-slide-up {
+    @apply translate-y-8 opacity-0 animate-[slide-up_0.8s_ease-out_forwards];
+  }
+
+  .animate-scale-in {
+    @apply scale-95 opacity-0 animate-[scale-in_0.6s_ease-out_forwards];
+  }
+
+  .hover-lift {
+    @apply transition-all duration-300 hover:translate-y-[-4px] hover:shadow-[var(--shadow-elegant)];
+  }
+
+  .elegant-border {
+    @apply border border-border/20 backdrop-blur-sm;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-accent to-rose bg-clip-text text-transparent;
+  }
+
+  .glass-effect {
+    @apply bg-card/80 backdrop-blur-lg border border-border/20;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
   }
 }
