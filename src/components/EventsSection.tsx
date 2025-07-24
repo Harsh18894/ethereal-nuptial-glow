@@ -31,7 +31,7 @@ const EventsSection = () => {
     },
     {
       title: 'Wedding',
-      description: 'The sacred ceremony where Emma and James exchange vows and begin their journey as one, surrounded by loved ones.',
+      description: 'The sacred ceremony where Manisha and Harsh exchange vows and begin their journey as one, surrounded by loved ones.',
       date: 'September 15, 2024',
       time: '4:00 PM',
       venue: 'Garden Manor Main Hall',
@@ -52,7 +52,7 @@ const EventsSection = () => {
   useEffect(() => {
     const observers = cardRefs.current.map((ref, index) => {
       if (!ref) return null;
-      
+
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
@@ -61,7 +61,7 @@ const EventsSection = () => {
         },
         { threshold: 0.2 }
       );
-      
+
       observer.observe(ref);
       return observer;
     });
@@ -81,10 +81,10 @@ const EventsSection = () => {
 
       {/* Floating Decorative Elements */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 left-1/4 text-accent/10 animate-float" style={{animationDelay: '0s'}}>
+        <div className="absolute top-20 left-1/4 text-accent/10 animate-float" style={{ animationDelay: '0s' }}>
           <Flower2 className="w-8 h-8" />
         </div>
-        <div className="absolute bottom-32 right-1/3 text-rose/10 animate-float" style={{animationDelay: '1.5s'}}>
+        <div className="absolute bottom-32 right-1/3 text-rose/10 animate-float" style={{ animationDelay: '1.5s' }}>
           <Crown className="w-6 h-6" />
         </div>
       </div>
@@ -111,11 +111,10 @@ const EventsSection = () => {
               <div
                 key={index}
                 ref={el => cardRefs.current[index] = el}
-                className={`transition-all duration-1000 transform ${
-                  isVisible
-                    ? 'translate-y-0 opacity-100'
-                    : 'translate-y-8 opacity-0'
-                }`}
+                className={`transition-all duration-1000 transform ${isVisible
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-8 opacity-0'
+                  }`}
                 style={{ transitionDelay: `${index * 150}ms` }}
               >
                 <div className="glass-effect rounded-2xl overflow-hidden hover-lift group">
@@ -127,7 +126,7 @@ const EventsSection = () => {
                       className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-                    
+
                     {/* Event Title Overlay */}
                     <div className="absolute bottom-4 left-6 flex items-center space-x-3">
                       <div className="w-10 h-10 rounded-full glass-effect flex items-center justify-center">
@@ -157,7 +156,18 @@ const EventsSection = () => {
                       </div>
                       <div className="flex items-center text-sm text-muted-foreground">
                         <MapPin className="w-4 h-4 text-accent mr-3 flex-shrink-0" />
-                        <span>{event.venue}</span>
+                        {event.venue.includes('Garden Manor') ? (
+                          <a
+                            href="https://maps.google.com/?q=Garden+Manor+1234+Vineyard+Lane+Napa+Valley+CA+94558"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-accent underline hover:text-rose transition-colors"
+                          >
+                            {event.venue}
+                          </a>
+                        ) : (
+                          <span>{event.venue}</span>
+                        )}
                       </div>
                     </div>
 
@@ -173,7 +183,7 @@ const EventsSection = () => {
         {/* Bottom Text */}
         <div className="text-center mt-16">
           <p className="text-muted-foreground italic max-w-2xl mx-auto font-light">
-            Each ceremony holds special significance in our journey together. 
+            Each ceremony holds special significance in our journey together.
             We invite you to be part of these sacred and joyous moments.
           </p>
         </div>

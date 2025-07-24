@@ -29,20 +29,18 @@ const CoupleSection = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2
-            className={`font-heading text-4xl md:text-5xl font-light text-foreground mb-4 transition-all duration-1000 transform ${
-              isVisible
+            className={`font-heading text-4xl md:text-5xl font-light text-foreground mb-4 transition-all duration-1000 transform ${isVisible
                 ? 'translate-y-0 opacity-100'
                 : 'translate-y-8 opacity-0'
-            }`}
+              }`}
           >
             Meet the Couple
           </h2>
           <div
-            className={`w-24 h-1 bg-gradient-to-r from-accent to-rose mx-auto transition-all duration-1000 delay-200 transform ${
-              isVisible
+            className={`w-24 h-1 bg-gradient-to-r from-accent to-rose mx-auto transition-all duration-1000 delay-200 transform ${isVisible
                 ? 'scale-x-100 opacity-100'
                 : 'scale-x-0 opacity-0'
-            }`}
+              }`}
           ></div>
         </div>
 
@@ -50,11 +48,10 @@ const CoupleSection = () => {
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20 max-w-6xl mx-auto">
           {/* Bride */}
           <div
-            className={`text-center transition-all duration-1000 delay-300 transform ${
-              isVisible
+            className={`text-center transition-all duration-1000 delay-300 transform ${isVisible
                 ? 'translate-x-0 opacity-100'
                 : '-translate-x-8 opacity-0'
-            }`}
+              }`}
           >
             <div className="relative group mb-8">
               <div className="relative overflow-hidden rounded-2xl hover-lift">
@@ -71,12 +68,12 @@ const CoupleSection = () => {
             </div>
 
             <h3 className="font-heading text-3xl font-medium text-foreground mb-2">
-              Emma
+              Manisha
             </h3>
             <p className="text-accent font-medium mb-4">The Bride</p>
             <p className="text-muted-foreground leading-relaxed max-w-md mx-auto">
-              A passionate architect with a love for sustainable design and travel. 
-              Emma brings creativity and warmth to everything she touches, from designing 
+              A passionate architect with a love for sustainable design and travel.
+              Emma brings creativity and warmth to everything she touches, from designing
               eco-friendly homes to planning the perfect dinner party for friends.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-2">
@@ -88,11 +85,10 @@ const CoupleSection = () => {
 
           {/* Groom */}
           <div
-            className={`text-center transition-all duration-1000 delay-500 transform ${
-              isVisible
+            className={`text-center transition-all duration-1000 delay-500 transform ${isVisible
                 ? 'translate-x-0 opacity-100'
                 : 'translate-x-8 opacity-0'
-            }`}
+              }`}
           >
             <div className="relative group mb-8">
               <div className="relative overflow-hidden rounded-2xl hover-lift">
@@ -109,12 +105,12 @@ const CoupleSection = () => {
             </div>
 
             <h3 className="font-heading text-3xl font-medium text-foreground mb-2">
-              James
+              Harsh
             </h3>
             <p className="text-accent font-medium mb-4">The Groom</p>
             <p className="text-muted-foreground leading-relaxed max-w-md mx-auto">
-              A software engineer turned entrepreneur with a passion for music and cooking. 
-              James combines analytical thinking with creative expression, whether he's 
+              A software engineer turned entrepreneur with a passion for music and cooking.
+              James combines analytical thinking with creative expression, whether he's
               building the next great app or perfecting his grandmother's pasta recipe.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-2">
