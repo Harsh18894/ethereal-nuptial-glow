@@ -3,7 +3,6 @@ import { ArrowLeft, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import Navigation from '@/components/Navigation';
-import LazyImage from '@/components/LazyImage';
 import gallery1 from '@/assets/gallery-1.jpg';
 import gallery2 from '@/assets/gallery-2.jpg';
 import bridePortrait from '@/assets/bride-portrait.webp';
@@ -186,10 +185,11 @@ const Gallery = () => {
                 onClick={() => openLightbox(galleryImages.indexOf(image))}
               >
                 <div className="relative overflow-hidden rounded-2xl hover-lift">
-                  <LazyImage
+                  <img
                     src={image.src}
                     alt={image.alt}
                     className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
@@ -239,7 +239,7 @@ const Gallery = () => {
 
             {/* Image */}
             <div className="relative max-w-5xl max-h-[90vh]">
-              <LazyImage
+              <img
                 src={galleryImages[selectedImage].src}
                 alt={galleryImages[selectedImage].alt}
                 className="max-w-full max-h-full object-contain rounded-xl animate-scale-in"

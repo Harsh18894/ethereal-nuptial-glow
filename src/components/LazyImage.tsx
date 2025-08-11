@@ -11,7 +11,7 @@ interface LazyImageProps {
 const LazyImage = ({ src, alt, className = '', placeholder, onLoad }: LazyImageProps) => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [isInView, setIsInView] = useState(false);
-    const imgRef = useRef<HTMLImageElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -27,8 +27,8 @@ const LazyImage = ({ src, alt, className = '', placeholder, onLoad }: LazyImageP
             }
         );
 
-        if (imgRef.current) {
-            observer.observe(imgRef.current);
+        if (containerRef.current) {
+            observer.observe(containerRef.current);
         }
 
         return () => observer.disconnect();
@@ -40,7 +40,7 @@ const LazyImage = ({ src, alt, className = '', placeholder, onLoad }: LazyImageP
     };
 
     return (
-        <div className={`relative overflow-hidden ${className}`}>
+        <div ref={containerRef} className={`relative overflow-hidden ${className}`}>
             {/* Placeholder */}
             {!isLoaded && placeholder && (
                 <div
@@ -52,7 +52,6 @@ const LazyImage = ({ src, alt, className = '', placeholder, onLoad }: LazyImageP
             {/* Actual Image */}
             {isInView && (
                 <img
-                    ref={imgRef}
                     src={src}
                     alt={alt}
                     className={`transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'
