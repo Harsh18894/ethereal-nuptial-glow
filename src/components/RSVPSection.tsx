@@ -242,8 +242,8 @@ const RSVPSection = () => {
                     <h4 className="font-medium text-foreground">Schedule</h4>
                     <p className="text-muted-foreground">
                       7:00 PM - Baraat<br />
-                      8:00 PM - Jaimala<br />
-                      10:00 PM - Wedding
+                      9:00 PM - Jaimala<br />
+                      11:00 PM - Wedding
                     </p>
                   </div>
                 </div>
