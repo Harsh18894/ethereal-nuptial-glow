@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import heroImageDesktop from '@/assets/hero-image.webp';
-import heroImageMobile from '@/assets/hero-image-alt.webp';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-// Fallback images in case WebP is not supported
+// Use public folder images for better Vercel compatibility
+const heroImageDesktop = '/hero-image.webp';
+const heroImageMobile = '/hero-image-alt.webp';
+
+// Fallback images in case WebP is not supported or fails to load
 const fallbackDesktopImage = 'https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80';
 const fallbackMobileImage = 'https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
 
