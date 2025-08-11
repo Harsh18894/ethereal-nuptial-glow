@@ -1,8 +1,16 @@
 {
+    "functions": {
+        "api/rsvp.ts": {
+            "maxDuration": 10
+        },
+        "api/rsvp-list.ts": {
+            "maxDuration": 10
+        }
+    },
     "rewrites": [
         {
-            "source": "/(.*)",
-            "destination": "/index.html"
+            "source": "/api/(.*)",
+            "destination": "/api/$1"
         }
     ]
 }

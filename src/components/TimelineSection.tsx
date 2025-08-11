@@ -1,9 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { Heart, Sparkles, Home, Diamond } from 'lucide-react';
-import gallery1 from '@/assets/gallery-1.jpg';
-import gallery2 from '@/assets/gallery-2.jpg';
-import bridePortrait from '@/assets/bride-portrait.jpg';
-import groomPortrait from '@/assets/groom-portrait.jpg';
 import firstDate from '@/assets/first-date.webp';
 import firstMeet from '@/assets/first-meet.webp';
 import rokaFied from '@/assets/rokafied.webp';
@@ -138,7 +134,7 @@ const TimelineSection = () => {
                       src={event.image}
                       alt={event.title}
                       className="w-full h-40 object-cover rounded-xl mb-4 shadow-md border border-border/20"
-                      style={{ objectPosition: 'center' }}
+                      style={event.title === 'The Engagement' ? { objectPosition: 'center top' } : { objectPosition: 'center' }}
                     />
                     <div className="glass-effect rounded-2xl p-8 hover-lift">
                       <div className="flex items-center mb-4">

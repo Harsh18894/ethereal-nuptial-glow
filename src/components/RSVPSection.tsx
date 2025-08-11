@@ -37,23 +37,49 @@ const RSVPSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Simulate form submission
-    toast({
-      title: "RSVP Received!",
-      description: "Thank you for your response. We can't wait to celebrate with you!",
-    });
+    try {
+      const response = await fetch('/api/rsvp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
 
-    // Reset form
-    setFormData({
-      name: '',
-      email: '',
-      attendance: '',
-      guests: '1',
-      message: ''
-    });
+      const data = await response.json();
+
+      if (response.ok) {
+        toast({
+          title: "RSVP Received!",
+          description: "Thank you for your response. We can't wait to celebrate with you!",
+        });
+
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          attendance: '',
+          guests: '1',
+          message: ''
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: data.error || "Failed to submit RSVP. Please try again.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error('RSVP submission error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to submit RSVP. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
@@ -188,7 +214,7 @@ const RSVPSection = () => {
           >
             {/* Venue Image */}
             <div className="relative overflow-hidden rounded-2xl mb-8 hover-lift">
-              <a href="https://maps.google.com/?q=Garden+Manor+1234+Vineyard+Lane+Napa+Valley+CA+94558" target="_blank" rel="noopener noreferrer">
+              <a href="https://maps.app.goo.gl/VQHyEEC31cZENKtd9" target="_blank" rel="noopener noreferrer">
                 <img
                   src={venueImage}
                   alt="Garden Manor Venue"
@@ -233,10 +259,10 @@ const RSVPSection = () => {
                   <MapPin className="w-6 h-6 text-accent mt-1" />
                   <div>
                     <h4 className="font-medium text-foreground">
-                      <a href="https://maps.google.com/?q=Garden+Manor+1234+Vineyard+Lane+Napa+Valley+CA+94558" target="_blank" rel="noopener noreferrer" className="text-accent underline hover:text-rose transition-colors">Venue</a>
+                      <a href="https://maps.app.goo.gl/VQHyEEC31cZENKtd9" target="_blank" rel="noopener noreferrer" className="text-accent underline hover:text-rose transition-colors">Venue</a>
                     </h4>
                     <p className="text-muted-foreground">
-                      <a href="https://maps.google.com/?q=Garden+Manor+1234+Vineyard+Lane+Napa+Valley+CA+94558" target="_blank" rel="noopener noreferrer" className="hover:underline">M.R. Golden Dream Farmhouse<br />Wave City<br />Ghaziabad, U.P.-201010</a>
+                      <a href="https://maps.app.goo.gl/VQHyEEC31cZENKtd9" target="_blank" rel="noopener noreferrer" className="hover:underline">M.R. Golden Dream Farmhouse<br />Wave City<br />Ghaziabad, U.P.(201001)</a>
                     </p>
                   </div>
                 </div>
