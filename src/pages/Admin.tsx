@@ -3,16 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Download, Users, CheckCircle, XCircle } from 'lucide-react';
-
-interface RSVPResponse {
-  id: number;
-  name: string;
-  email: string;
-  attendance: 'yes' | 'no';
-  guests: number;
-  message: string;
-  created_at: string;
-}
+import { getRSVPResponses, getRSVPStats, RSVPResponse } from '@/lib/rsvpService';
 
 const Admin = () => {
   const [responses, setResponses] = useState<RSVPResponse[]>([]);
@@ -25,14 +16,8 @@ const Admin = () => {
 
   const fetchResponses = async () => {
     try {
-      const response = await fetch('/api/rsvp-list');
-      const data = await response.json();
-
-      if (response.ok) {
-        setResponses(data.responses);
-      } else {
-        setError(data.error || 'Failed to fetch responses');
-      }
+      const responses = await getRSVPResponses();
+      setResponses(responses);
     } catch (error) {
       setError('Failed to fetch responses');
     } finally {
@@ -44,14 +29,14 @@ const Admin = () => {
     const headers = ['Name', 'Email', 'Attendance', 'Guests', 'Message', 'Date'];
     const csvContent = [
       headers.join(','),
-      ...responses.map(r => [
-        `"${r.name}"`,
-        `"${r.email || ''}"`,
-        r.attendance,
-        r.guests,
-        `"${r.message || ''}"`,
-        new Date(r.created_at).toLocaleDateString()
-      ].join(','))
+             ...responses.map(r => [
+         `"${r.name}"`,
+         `"${r.email || ''}"`,
+         r.attendance,
+         r.guests,
+         `"${r.message || ''}"`,
+         r.createdAt.toLocaleDateString()
+       ].join(','))
     ].join('\n');
 
     const blob = new Blob([csvContent], { type: 'text/csv' });
@@ -63,12 +48,24 @@ const Admin = () => {
     window.URL.revokeObjectURL(url);
   };
 
-  const stats = {
-    total: responses.length,
-    attending: responses.filter(r => r.attendance === 'yes').length,
-    notAttending: responses.filter(r => r.attendance === 'no').length,
-    totalGuests: responses.filter(r => r.attendance === 'yes').reduce((sum, r) => sum + r.guests, 0)
-  };
+  const [stats, setStats] = useState({
+    total: 0,
+    attending: 0,
+    notAttending: 0,
+    totalGuests: 0
+  });
+
+  useEffect(() => {
+    const loadStats = async () => {
+      try {
+        const statsData = await getRSVPStats();
+        setStats(statsData);
+      } catch (error) {
+        console.error('Error loading stats:', error);
+      }
+    };
+    loadStats();
+  }, [responses]);
 
   if (loading) {
     return (
@@ -169,7 +166,7 @@ const Admin = () => {
                       <p className="text-sm text-muted-foreground mb-2">"{response.message}"</p>
                     )}
                     <p className="text-xs text-muted-foreground">
-                      Submitted: {new Date(response.created_at).toLocaleString()}
+                      Submitted: {response.createdAt.toLocaleString()}
                     </p>
                   </div>
                 </div>

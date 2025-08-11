@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
+import { submitRSVP } from '@/lib/rsvpService';
 import venueImage from '@/assets/venue-image.jpg';
 
 const RSVPSection = () => {
@@ -41,37 +42,28 @@ const RSVPSection = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('/api/rsvp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+      // Submit to Firebase
+      await submitRSVP({
+        name: formData.name,
+        email: formData.email || undefined,
+        attendance: formData.attendance as 'yes' | 'no',
+        guests: parseInt(formData.guests),
+        message: formData.message || undefined
       });
 
-      const data = await response.json();
+      toast({
+        title: "RSVP Received!",
+        description: "Thank you for your response. We can't wait to celebrate with you!",
+      });
 
-      if (response.ok) {
-        toast({
-          title: "RSVP Received!",
-          description: "Thank you for your response. We can't wait to celebrate with you!",
-        });
-
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          attendance: '',
-          guests: '1',
-          message: ''
-        });
-      } else {
-        toast({
-          title: "Error",
-          description: data.error || "Failed to submit RSVP. Please try again.",
-          variant: "destructive",
-        });
-      }
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        attendance: '',
+        guests: '1',
+        message: ''
+      });
     } catch (error) {
       console.error('RSVP submission error:', error);
       toast({
