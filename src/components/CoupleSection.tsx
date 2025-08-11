@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import bridePortrait from '@/assets/bride-portrait.jpg';
-import groomPortrait from '@/assets/groom-portrait.jpg';
+import bridePortrait from '@/assets/bride-portrait.webp';
+import groomPortrait from '@/assets/groom-portrait.webp';
 
 const CoupleSection = () => {
   const [isVisible, setIsVisible] = useState(false);

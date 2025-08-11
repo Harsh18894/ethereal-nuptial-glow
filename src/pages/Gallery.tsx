@@ -1,20 +1,27 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { ArrowLeft, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import Navigation from '@/components/Navigation';
+import LazyImage from '@/components/LazyImage';
 import gallery1 from '@/assets/gallery-1.jpg';
 import gallery2 from '@/assets/gallery-2.jpg';
-import bridePortrait from '@/assets/bride-portrait.jpg';
-import groomPortrait from '@/assets/groom-portrait.jpg';
-import heroImage from '@/assets/hero-image.jpg';
+import bridePortrait from '@/assets/bride-portrait.webp';
+import groomPortrait from '@/assets/groom-portrait.webp';
+import heroImage from '@/assets/hero-image.webp';
 import venueImage from '@/assets/venue-image.jpg';
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('All');
 
-  const galleryImages = [
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
+  // Memoize gallery images to prevent unnecessary re-renders
+  const galleryImages = useMemo(() => [
     {
       src: heroImage,
       alt: 'Beautiful wedding bouquet',
@@ -45,23 +52,30 @@ const Gallery = () => {
       alt: 'Garden Manor venue',
       category: 'Venue'
     }
-  ];
+  ], []);
 
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+  // Memoize categories
+  const categories = useMemo(() => ['All', 'Portraits', 'Ceremony', 'Reception', 'Details', 'Venue'], []);
 
-  const openLightbox = (index: number) => {
+  // Memoize filtered images
+  const filteredImages = useMemo(() =>
+    activeCategory === 'All'
+      ? galleryImages
+      : galleryImages.filter(img => img.category === activeCategory),
+    [activeCategory, galleryImages]
+  );
+
+  const openLightbox = useCallback((index: number) => {
     setSelectedImage(index);
     document.body.style.overflow = 'hidden';
-  };
+  }, []);
 
-  const closeLightbox = () => {
+  const closeLightbox = useCallback(() => {
     setSelectedImage(null);
     document.body.style.overflow = 'unset';
-  };
+  }, []);
 
-  const navigateImage = (direction: 'prev' | 'next') => {
+  const navigateImage = useCallback((direction: 'prev' | 'next') => {
     if (selectedImage === null) return;
 
     const newIndex = direction === 'next'
@@ -69,7 +83,7 @@ const Gallery = () => {
       : (selectedImage - 1 + galleryImages.length) % galleryImages.length;
 
     setSelectedImage(newIndex);
-  };
+  }, [selectedImage, galleryImages.length]);
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -90,14 +104,13 @@ const Gallery = () => {
 
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
-  }, [selectedImage]);
+  }, [selectedImage, closeLightbox, navigateImage]);
 
-  const categories = ['All', 'Portraits', 'Ceremony', 'Reception', 'Details', 'Venue'];
-  const [activeCategory, setActiveCategory] = useState('All');
+  const handleCategoryChange = useCallback((category: string) => {
+    setActiveCategory(category);
+  }, []);
 
-  const filteredImages = activeCategory === 'All'
-    ? galleryImages
-    : galleryImages.filter(img => img.category === activeCategory);
+
 
   return (
     <div className="min-h-screen bg-background">
@@ -109,8 +122,8 @@ const Gallery = () => {
           <div className="text-center">
             <div
               className={`transition-all duration-1000 transform ${isVisible
-                  ? 'translate-y-0 opacity-100'
-                  : 'translate-y-8 opacity-0'
+                ? 'translate-y-0 opacity-100'
+                : 'translate-y-8 opacity-0'
                 }`}
             >
               <Link
@@ -138,18 +151,18 @@ const Gallery = () => {
         <div className="container mx-auto px-6">
           <div
             className={`flex flex-wrap justify-center gap-4 transition-all duration-1000 delay-300 transform ${isVisible
-                ? 'translate-y-0 opacity-100'
-                : 'translate-y-8 opacity-0'
+              ? 'translate-y-0 opacity-100'
+              : 'translate-y-8 opacity-0'
               }`}
           >
             {categories.map((category) => (
               <Button
                 key={category}
                 variant={activeCategory === category ? "default" : "outline"}
-                onClick={() => setActiveCategory(category)}
+                onClick={() => handleCategoryChange(category)}
                 className={`rounded-full px-6 transition-all duration-300 ${activeCategory === category
-                    ? 'bg-gradient-to-r from-accent to-rose text-white hover:from-accent/90 hover:to-rose/90'
-                    : 'hover:bg-accent/10 hover:text-accent'
+                  ? 'bg-gradient-to-r from-accent to-rose text-white hover:from-accent/90 hover:to-rose/90'
+                  : 'hover:bg-accent/10 hover:text-accent'
                   }`}
               >
                 {category}
@@ -167,13 +180,13 @@ const Gallery = () => {
               <div
                 key={index}
                 className={`group cursor-pointer transition-all duration-700 delay-${index * 100} transform ${isVisible
-                    ? 'translate-y-0 opacity-100'
-                    : 'translate-y-8 opacity-0'
+                  ? 'translate-y-0 opacity-100'
+                  : 'translate-y-8 opacity-0'
                   }`}
                 onClick={() => openLightbox(galleryImages.indexOf(image))}
               >
                 <div className="relative overflow-hidden rounded-2xl hover-lift">
-                  <img
+                  <LazyImage
                     src={image.src}
                     alt={image.alt}
                     className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110"
@@ -226,7 +239,7 @@ const Gallery = () => {
 
             {/* Image */}
             <div className="relative max-w-5xl max-h-[90vh]">
-              <img
+              <LazyImage
                 src={galleryImages[selectedImage].src}
                 alt={galleryImages[selectedImage].alt}
                 className="max-w-full max-h-full object-contain rounded-xl animate-scale-in"

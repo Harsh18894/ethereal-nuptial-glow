@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Calendar, MapPin, Clock } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import heroImageDesktop from '@/assets/hero-image.jpg';
-import heroImageMobile from '@/assets/hero-image-alt.jpg';
+import heroImageDesktop from '@/assets/hero-image.webp';
+import heroImageMobile from '@/assets/hero-image-alt.webp';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 const HeroSection = () => {

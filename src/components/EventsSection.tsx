@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Calendar, Clock, MapPin, Flower2, Crown, Heart, Sparkles } from 'lucide-react';
-import haldiImage from '@/assets/haldi-event.jpg';
+import haldiImage from '@/assets/haldi-event.webp';
 import baraatImage from '@/assets/baraat-event.jpg';
 import weddingImage from '@/assets/wedding-event.jpg';
 import phereImage from '@/assets/phere-event.jpg';
@@ -13,7 +13,7 @@ const EventsSection = () => {
   const events = [
     {
       title: 'Haldi',
-      description: 'A beautiful ceremony where Haldi will be applied to the bride and groom, bringing blessings for a bright future together.',
+      description: 'Get ready to splash in colors and laughter as we celebrate the joyous Haldi ceremony! Join us for a day full of vibrant fun, traditional rituals, and unforgettable memories.',
       date: 'November 06, 2025',
       time: '10:00 AM',
       venue: 'Dream Homes, Wave City, Ghaziabad',
@@ -22,7 +22,7 @@ const EventsSection = () => {
     },
     {
       title: 'Baraat',
-      description: 'The joyous procession where the groom will be arriving with family and friends, celebrating with band, baja, and baraat.',
+      description: 'Get ready to groove and cheer as the groom’s grand Baraat arrives in style! Let’s kick off the celebrations with lively beats, dance, and endless joy.',
       date: 'November 08, 2025',
       time: '7:00 PM',
       venue: 'M.R. Golden Dream Farmhouse, Wave City, Ghaziabad',
@@ -30,8 +30,8 @@ const EventsSection = () => {
       image: baraatImage
     },
     {
-      title: 'Wedding',
-      description: 'The sacred ceremony where Manisha and Harsh exchange vows and begin their journey as one, surrounded by loved ones.',
+      title: 'Jaimala',
+      description: 'Witness the magical moment when two souls exchange floral garlands in the Jaimala ceremony. A beautiful tradition symbolizing love, respect, and the beginning of forever.',
       date: 'November 09, 2025',
       time: '9:00 PM',
       venue: 'M.R. Golden Dream Farmhouse, Wave City, Ghaziabad',
@@ -40,7 +40,7 @@ const EventsSection = () => {
     },
     {
       title: 'Phere',
-      description: 'The seven sacred circles around the holy fire, each representing a vow and promise for their married life.',
+      description: 'Join us as the couple takes the sacred seven rounds in the Phere, sealing their vows and promises. A timeless ritual that marks the start of their lifelong journey together.',
       date: 'November 08, 2025',
       time: '11:00 PM',
       venue: 'M.R. Golden Dream Farmhouse, Wave City, Ghaziabad',

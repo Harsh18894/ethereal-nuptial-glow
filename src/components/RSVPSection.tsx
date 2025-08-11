@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback, memo } from 'react';
 import { MapPin, Phone, Mail, Calendar, Clock, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,6 +7,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { submitRSVP } from '@/lib/rsvpService';
+import LazyImage from '@/components/LazyImage';
 import venueImage from '@/assets/venue-image.jpg';
 
 const RSVPSection = () => {
@@ -74,9 +75,9 @@ const RSVPSection = () => {
     }
   };
 
-  const handleInputChange = (field: string, value: string) => {
+  const handleInputChange = useCallback((field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
-  };
+  }, []);
 
   return (
     <section id="rsvp" ref={sectionRef} className="py-20 bg-secondary/20 relative overflow-hidden">
@@ -207,7 +208,7 @@ const RSVPSection = () => {
             {/* Venue Image */}
             <div className="relative overflow-hidden rounded-2xl mb-8 hover-lift">
               <a href="https://maps.app.goo.gl/VQHyEEC31cZENKtd9" target="_blank" rel="noopener noreferrer">
-                <img
+                <LazyImage
                   src={venueImage}
                   alt="Garden Manor Venue"
                   className="w-full h-64 object-cover cursor-pointer"
@@ -286,4 +287,4 @@ const RSVPSection = () => {
   );
 };
 
-export default RSVPSection;
+export default memo(RSVPSection);
