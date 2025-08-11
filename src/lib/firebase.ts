@@ -1,15 +1,18 @@
-import { initializeApp } from 'firebase/app';
-import { getFirestore } from 'firebase/firestore';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getAnalytics } from "firebase/analytics";
 
-// Your Firebase configuration
-// Replace these with your actual Firebase config values
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyC4WFxnc3-YGAMcV-E5ZlNkuQGZREQGVXY",
+  authDomain: "ethereal-nuptial-glow.firebaseapp.com",
+  projectId: "ethereal-nuptial-glow",
+  storageBucket: "ethereal-nuptial-glow.firebasestorage.app",
+  messagingSenderId: "754869535152",
+  appId: "1:754869535152:web:d08a8e9712b07f3c365675",
+  measurementId: "G-CSV7YBPRME"
 };
 
 // Initialize Firebase
@@ -17,5 +20,8 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Firestore
 export const db = getFirestore(app);
+
+// Initialize Analytics (optional)
+const analytics = getAnalytics(app);
 
 export default app;
