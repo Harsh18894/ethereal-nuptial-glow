@@ -4,6 +4,10 @@ import gallery1 from '@/assets/gallery-1.jpg';
 import gallery2 from '@/assets/gallery-2.jpg';
 import bridePortrait from '@/assets/bride-portrait.jpg';
 import groomPortrait from '@/assets/groom-portrait.jpg';
+import firstDate from '@/assets/first-date.webp';
+import firstMeet from '@/assets/first-meet.webp';
+import rokaFied from '@/assets/rokafied.webp';
+import engagement from '@/assets/engagement.webp';
 
 const TimelineSection = () => {
   const [visibleItems, setVisibleItems] = useState<number[]>([]);
@@ -17,7 +21,7 @@ const TimelineSection = () => {
       description: 'Our families insisted on us meeting and so we did at Haldirams, Raj Nagar. She was hesitant, I was shy, but the persistent nudges from our elders brought us together. Over shared Fries and Krushers, a quiet connection formed—one that would grow into something truly special.',
       icon: Heart,
       side: 'left',
-      image: gallery1
+      image: firstMeet
     },
     {
       year: '2024',
@@ -25,15 +29,15 @@ const TimelineSection = () => {
       description: 'Our first official date was at IHC Delhi. The food was nothing to write home about, but we barely noticed as we talked for hours, lost in conversation. Later, we headed to Café Tesu for another meal, where the taste was better, but the company was what truly made the evening unforgettable.',
       icon: Sparkles,
       side: 'right',
-      image: gallery2
+      image: firstDate
     },
     {
       year: '2025',
       title: 'Rokafied',
-      description: 'After dating, we decided to take the next step and get rokafied. Surrounded by close family and laughter, promises were made over sweets and warm smiles. It wasn’t just a ritual—it was the beginning of a lifetime pact, sealed with love and the joy of togetherness',
+      description: 'After dating, we decided to take the next step and get rokafied. Surrounded by close family and laughter, promises were made over sweets and warm smiles. It wasn’t just a ritual—it was the beginning of a lifetime pact, sealed with love and the joy of togetherness.',
       icon: Home,
       side: 'left',
-      image: bridePortrait
+      image: rokaFied
     },
     {
       year: '2025',
@@ -41,7 +45,7 @@ const TimelineSection = () => {
       description: 'On a hot March afternoon at Eleven-to-Eleven, we had our engagement. The air buzzed with excitement as rings were exchanged and smiles shared. Surrounded by friends and family, the moment felt both intimate and grand—a beautiful promise made, marking the start of our forever journey.',
       icon: Diamond,
       side: 'right',
-      image: groomPortrait
+      image: engagement
     }
   ];
 
