@@ -196,8 +196,8 @@ const RSVPSection = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h4 className="font-heading text-xl font-medium">Garden Manor</h4>
-                  <p className="text-sm opacity-90">Napa Valley, California</p>
+                  <h4 className="font-heading text-xl font-medium">M.R. Golden Dream Farmhouse</h4>
+                  <p className="text-sm opacity-90">Wave City, Ghaziabad</p>
                 </div>
               </a>
             </div>
@@ -213,7 +213,7 @@ const RSVPSection = () => {
                   <Calendar className="w-6 h-6 text-accent mt-1" />
                   <div>
                     <h4 className="font-medium text-foreground">Date</h4>
-                    <p className="text-muted-foreground">Saturday, September 15th, 2024</p>
+                    <p className="text-muted-foreground">Saturday, November 8th, 2025</p>
                   </div>
                 </div>
 
@@ -222,9 +222,9 @@ const RSVPSection = () => {
                   <div>
                     <h4 className="font-medium text-foreground">Schedule</h4>
                     <p className="text-muted-foreground">
-                      4:00 PM - Ceremony<br />
-                      5:30 PM - Cocktail Hour<br />
-                      7:00 PM - Reception
+                      7:00 PM - Baraat<br />
+                      8:00 PM - Jaimala<br />
+                      10:00 PM - Wedding
                     </p>
                   </div>
                 </div>
@@ -236,7 +236,7 @@ const RSVPSection = () => {
                       <a href="https://maps.google.com/?q=Garden+Manor+1234+Vineyard+Lane+Napa+Valley+CA+94558" target="_blank" rel="noopener noreferrer" className="text-accent underline hover:text-rose transition-colors">Venue</a>
                     </h4>
                     <p className="text-muted-foreground">
-                      <a href="https://maps.google.com/?q=Garden+Manor+1234+Vineyard+Lane+Napa+Valley+CA+94558" target="_blank" rel="noopener noreferrer" className="hover:underline">Garden Manor<br />1234 Vineyard Lane<br />Napa Valley, CA 94558</a>
+                      <a href="https://maps.google.com/?q=Garden+Manor+1234+Vineyard+Lane+Napa+Valley+CA+94558" target="_blank" rel="noopener noreferrer" className="hover:underline">M.R. Golden Dream Farmhouse<br />Wave City<br />Ghaziabad, U.P.-201010</a>
                     </p>
                   </div>
                 </div>
@@ -245,7 +245,7 @@ const RSVPSection = () => {
                   <Users className="w-6 h-6 text-accent mt-1" />
                   <div>
                     <h4 className="font-medium text-foreground">Dress Code</h4>
-                    <p className="text-muted-foreground">Garden Party Elegant</p>
+                    <p className="text-muted-foreground">Wedding Elegant</p>
                   </div>
                 </div>
 
@@ -254,12 +254,9 @@ const RSVPSection = () => {
                   <div className="space-y-2">
                     <div className="flex items-center space-x-3">
                       <Phone className="w-4 h-4 text-accent" />
-                      <span className="text-muted-foreground">(555) 123-4567</span>
+                      <span className="text-muted-foreground">(+91) 7895-052263</span>
                     </div>
-                    <div className="flex items-center space-x-3">
-                      <Mail className="w-4 h-4 text-accent" />
-                      <span className="text-muted-foreground">emma.james.wedding@email.com</span>
-                    </div>
+
                   </div>
                 </div>
               </div>

@@ -1,5 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Heart, Sparkles, Home, Diamond } from 'lucide-react';
+import gallery1 from '@/assets/gallery-1.jpg';
+import gallery2 from '@/assets/gallery-2.jpg';
+import bridePortrait from '@/assets/bride-portrait.jpg';
+import groomPortrait from '@/assets/groom-portrait.jpg';
 
 const TimelineSection = () => {
   const [visibleItems, setVisibleItems] = useState<number[]>([]);
@@ -8,39 +12,43 @@ const TimelineSection = () => {
 
   const timelineEvents = [
     {
-      year: '2019',
+      year: '2024',
       title: 'First Meeting',
-      description: 'A chance encounter at a coffee shop in downtown Portland. Emma was sketching building designs while James was debugging code on his laptop at the next table.',
+      description: 'Our families insisted on us meeting and so we did at Haldirams, Raj Nagar. She was hesitant, I was shy, but the persistent nudges from our elders brought us together. Over shared Fries and Krushers, a quiet connection formed—one that would grow into something truly special.',
       icon: Heart,
-      side: 'left'
+      side: 'left',
+      image: gallery1
     },
     {
-      year: '2020',
-      title: 'First Adventure',
-      description: 'Our first trip together to Iceland, where we discovered our shared love for adventure and Emma taught James to appreciate the Northern Lights.',
+      year: '2024',
+      title: 'First Date',
+      description: 'Our first official date was at IHC Delhi. The food was nothing to write home about, but we barely noticed as we talked for hours, lost in conversation. Later, we headed to Café Tesu for another meal, where the taste was better, but the company was what truly made the evening unforgettable.',
       icon: Sparkles,
-      side: 'right'
+      side: 'right',
+      image: gallery2
     },
     {
-      year: '2022',
-      title: 'Moving In',
-      description: 'We found our perfect home in Napa Valley - a charming cottage that Emma redesigned and James filled with smart home technology.',
+      year: '2025',
+      title: 'Rokafied',
+      description: 'After dating, we decided to take the next step and get rokafied. Surrounded by close family and laughter, promises were made over sweets and warm smiles. It wasn’t just a ritual—it was the beginning of a lifetime pact, sealed with love and the joy of togetherness',
       icon: Home,
-      side: 'left'
+      side: 'left',
+      image: bridePortrait
     },
     {
-      year: '2023',
-      title: 'The Proposal',
-      description: 'James proposed during a sunset picnic in our favorite vineyard, with a ring he designed himself and a speech that made Emma cry happy tears.',
+      year: '2025',
+      title: 'The Engagement',
+      description: 'On a hot March afternoon at Eleven-to-Eleven, we had our engagement. The air buzzed with excitement as rings were exchanged and smiles shared. Surrounded by friends and family, the moment felt both intimate and grand—a beautiful promise made, marking the start of our forever journey.',
       icon: Diamond,
-      side: 'right'
+      side: 'right',
+      image: groomPortrait
     }
   ];
 
   useEffect(() => {
     const observers = itemRefs.current.map((ref, index) => {
       if (!ref) return null;
-      
+
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
@@ -49,7 +57,7 @@ const TimelineSection = () => {
         },
         { threshold: 0.3 }
       );
-      
+
       observer.observe(ref);
       return observer;
     });
@@ -66,16 +74,16 @@ const TimelineSection = () => {
         <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-accent"></div>
         <div className="absolute bottom-20 right-10 w-24 h-24 rounded-full bg-rose"></div>
       </div>
-      
+
       {/* Floating Hearts */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-32 right-1/4 text-accent/20 animate-float" style={{animationDelay: '0s'}}>
+        <div className="absolute top-32 right-1/4 text-accent/20 animate-float" style={{ animationDelay: '0s' }}>
           <Heart className="w-6 h-6" />
         </div>
-        <div className="absolute bottom-40 left-1/4 text-rose/20 animate-float" style={{animationDelay: '1s'}}>
+        <div className="absolute bottom-40 left-1/4 text-rose/20 animate-float" style={{ animationDelay: '1s' }}>
           <Heart className="w-4 h-4" />
         </div>
-        <div className="absolute top-2/3 right-1/6 text-accent/15 animate-float" style={{animationDelay: '2s'}}>
+        <div className="absolute top-2/3 right-1/6 text-accent/15 animate-float" style={{ animationDelay: '2s' }}>
           <Sparkles className="w-5 h-5" />
         </div>
       </div>
@@ -108,21 +116,26 @@ const TimelineSection = () => {
                 <div
                   key={index}
                   ref={el => itemRefs.current[index] = el}
-                  className={`relative flex items-center ${
-                    isLeft ? 'md:flex-row' : 'md:flex-row-reverse'
-                  } flex-col`}
+                  className={`relative flex items-center ${isLeft ? 'md:flex-row' : 'md:flex-row-reverse'
+                    } flex-col`}
                 >
                   {/* Content Card */}
                   <div
-                    className={`w-full md:w-5/12 transition-all duration-1000 transform ${
-                      isVisible
-                        ? 'translate-x-0 opacity-100'
-                        : isLeft
+                    className={`w-full md:w-5/12 transition-all duration-1000 transform ${isVisible
+                      ? 'translate-x-0 opacity-100'
+                      : isLeft
                         ? '-translate-x-8 opacity-0'
                         : 'translate-x-8 opacity-0'
-                    }`}
+                      }`}
                     style={{ transitionDelay: `${index * 200}ms` }}
                   >
+                    {/* Timeline Event Image */}
+                    <img
+                      src={event.image}
+                      alt={event.title}
+                      className="w-full h-40 object-cover rounded-xl mb-4 shadow-md border border-border/20"
+                      style={{ objectPosition: 'center' }}
+                    />
                     <div className="glass-effect rounded-2xl p-8 hover-lift">
                       <div className="flex items-center mb-4">
                         <div className="w-12 h-12 rounded-full bg-gradient-to-r from-accent to-rose flex items-center justify-center mr-4">
@@ -144,9 +157,8 @@ const TimelineSection = () => {
                   {/* Center Icon (Desktop) */}
                   <div className="hidden md:block absolute left-1/2 transform -translate-x-1/2 z-10">
                     <div
-                      className={`w-16 h-16 rounded-full bg-gradient-to-r from-accent to-rose flex items-center justify-center shadow-accent transition-all duration-700 transform ${
-                        isVisible ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
-                      }`}
+                      className={`w-16 h-16 rounded-full bg-gradient-to-r from-accent to-rose flex items-center justify-center shadow-accent transition-all duration-700 transform ${isVisible ? 'scale-100 opacity-100' : 'scale-0 opacity-0'
+                        }`}
                       style={{ transitionDelay: `${index * 200 + 300}ms` }}
                     >
                       <Icon className="w-8 h-8 text-white" />

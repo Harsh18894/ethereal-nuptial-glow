@@ -30,16 +30,16 @@ const CoupleSection = () => {
         <div className="text-center mb-16">
           <h2
             className={`font-heading text-4xl md:text-5xl font-light text-foreground mb-4 transition-all duration-1000 transform ${isVisible
-                ? 'translate-y-0 opacity-100'
-                : 'translate-y-8 opacity-0'
+              ? 'translate-y-0 opacity-100'
+              : 'translate-y-8 opacity-0'
               }`}
           >
             Meet the Couple
           </h2>
           <div
             className={`w-24 h-1 bg-gradient-to-r from-accent to-rose mx-auto transition-all duration-1000 delay-200 transform ${isVisible
-                ? 'scale-x-100 opacity-100'
-                : 'scale-x-0 opacity-0'
+              ? 'scale-x-100 opacity-100'
+              : 'scale-x-0 opacity-0'
               }`}
           ></div>
         </div>
@@ -49,8 +49,8 @@ const CoupleSection = () => {
           {/* Bride */}
           <div
             className={`text-center transition-all duration-1000 delay-300 transform ${isVisible
-                ? 'translate-x-0 opacity-100'
-                : '-translate-x-8 opacity-0'
+              ? 'translate-x-0 opacity-100'
+              : '-translate-x-8 opacity-0'
               }`}
           >
             <div className="relative group mb-8">
@@ -72,13 +72,13 @@ const CoupleSection = () => {
             </h3>
             <p className="text-accent font-medium mb-4">The Bride</p>
             <p className="text-muted-foreground leading-relaxed max-w-md mx-auto">
-              A passionate architect with a love for sustainable design and travel.
-              Emma brings creativity and warmth to everything she touches, from designing
-              eco-friendly homes to planning the perfect dinner party for friends.
+              A free spirit with a love for travel and photography.
+              Manisha brings creativity and warmth to everything she touches, from crunching invoices
+              to editing instagram posts.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-2">
-              <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Architecture</span>
-              <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Yoga</span>
+              <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Finance</span>
+              <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Travel</span>
               <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Photography</span>
             </div>
           </div>
@@ -86,8 +86,8 @@ const CoupleSection = () => {
           {/* Groom */}
           <div
             className={`text-center transition-all duration-1000 delay-500 transform ${isVisible
-                ? 'translate-x-0 opacity-100'
-                : 'translate-x-8 opacity-0'
+              ? 'translate-x-0 opacity-100'
+              : 'translate-x-8 opacity-0'
               }`}
           >
             <div className="relative group mb-8">
@@ -109,9 +109,9 @@ const CoupleSection = () => {
             </h3>
             <p className="text-accent font-medium mb-4">The Groom</p>
             <p className="text-muted-foreground leading-relaxed max-w-md mx-auto">
-              A software engineer turned entrepreneur with a passion for music and cooking.
-              James combines analytical thinking with creative expression, whether he's
-              building the next great app or perfecting his grandmother's pasta recipe.
+              A product manager with a passion for technology, music, and cooking.
+              Harsh combines analytical thinking with creative expression, whether he's
+              building the next great app or perfecting his pasta recipe.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-2">
               <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Technology</span>

@@ -11,6 +11,12 @@ const HeroSection = () => {
 
   useEffect(() => {
     setIsVisible(true);
+    // On mobile, scroll by 1px to hide browser search bar after load
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      setTimeout(() => {
+        window.scrollTo(0, 1);
+      }, 300);
+    }
   }, []);
 
   // Format date as '8th November, 2025'

@@ -13,37 +13,37 @@ const EventsSection = () => {
   const events = [
     {
       title: 'Haldi',
-      description: 'A beautiful ceremony where turmeric paste is applied to the bride and groom, bringing blessings for a bright future together.',
-      date: 'September 13, 2024',
+      description: 'A beautiful ceremony where Haldi will be applied to the bride and groom, bringing blessings for a bright future together.',
+      date: 'November 06, 2025',
       time: '10:00 AM',
-      venue: 'Garden Manor Courtyard',
+      venue: 'Dream Homes, Wave City, Ghaziabad',
       icon: Flower2,
       image: haldiImage
     },
     {
       title: 'Baraat',
-      description: 'The joyous procession where the groom arrives with family and friends, celebrating with music and dance.',
-      date: 'September 15, 2024',
-      time: '3:00 PM',
-      venue: 'Garden Manor Entrance',
+      description: 'The joyous procession where the groom will be arriving with family and friends, celebrating with band, baja, and baraat.',
+      date: 'November 08, 2025',
+      time: '7:00 PM',
+      venue: 'M.R. Golden Dream Farmhouse, Wave City, Ghaziabad',
       icon: Crown,
       image: baraatImage
     },
     {
       title: 'Wedding',
       description: 'The sacred ceremony where Manisha and Harsh exchange vows and begin their journey as one, surrounded by loved ones.',
-      date: 'September 15, 2024',
-      time: '4:00 PM',
-      venue: 'Garden Manor Main Hall',
+      date: 'November 09, 2025',
+      time: '9:00 PM',
+      venue: 'M.R. Golden Dream Farmhouse, Wave City, Ghaziabad',
       icon: Heart,
       image: weddingImage
     },
     {
       title: 'Phere',
       description: 'The seven sacred circles around the holy fire, each representing a vow and promise for their married life.',
-      date: 'September 15, 2024',
-      time: '5:00 PM',
-      venue: 'Garden Manor Sacred Space',
+      date: 'November 08, 2025',
+      time: '11:00 PM',
+      venue: 'M.R. Golden Dream Farmhouse, Wave City, Ghaziabad',
       icon: Sparkles,
       image: phereImage
     }
