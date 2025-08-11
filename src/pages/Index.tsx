@@ -1,5 +1,5 @@
 import Navigation from '@/components/Navigation';
-import HeroSection from '@/components/HeroSection';
+import HeroSection from '@/components/HeroSectionDebug';
 import CoupleSection from '@/components/CoupleSection';
 import TimelineSection from '@/components/TimelineSection';
 import EventsSection from '@/components/EventsSection';

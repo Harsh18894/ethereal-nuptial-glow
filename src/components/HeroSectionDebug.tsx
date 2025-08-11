@@ -1,32 +1,13 @@
 import { useEffect, useState } from 'react';
-import heroImageDesktop from '@/assets/hero-image.webp';
-import heroImageMobile from '@/assets/hero-image-alt.webp';
 import { useIsMobile } from '@/hooks/use-mobile';
 
-// Fallback images in case WebP is not supported
-const fallbackDesktopImage = 'https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80';
-const fallbackMobileImage = 'https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80';
-
-const HeroSection = () => {
+const HeroSectionDebug = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [imageError, setImageError] = useState(false);
   const isMobile = useIsMobile();
 
   useEffect(() => {
     setIsVisible(true);
-    // On mobile, scroll by 1px to hide browser search bar after load
-    if (typeof window !== 'undefined' && window.innerWidth < 768) {
-      setTimeout(() => {
-        window.scrollTo(0, 1);
-      }, 300);
-    }
-
-    // Debug: Log image sources
-    console.log('Hero images:', {
-      desktop: heroImageDesktop,
-      mobile: heroImageMobile,
-      isMobile
-    });
+    console.log('HeroSectionDebug mounted, isMobile:', isMobile);
   }, [isMobile]);
 
   // Format date as '8th November, 2025'
@@ -42,13 +23,6 @@ const HeroSection = () => {
     }
   };
   const formattedDate = `${day}${daySuffix(day)} ${weddingDate.toLocaleString('en-US', { month: 'long' })}, ${weddingDate.getFullYear()}`;
-
-  const scrollToRSVP = () => {
-    const element = document.querySelector('#rsvp');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
   return (
     <section className={`relative min-h-screen flex ${isMobile ? 'flex-col' : 'flex-row'} items-center justify-center overflow-hidden bg-gradient-to-br from-[#f7e7d3] via-[#fbeee6] to-[#e6d3c2]`}>
@@ -78,11 +52,12 @@ const HeroSection = () => {
           {/* Right block: image */}
           <div className="flex-1 relative h-screen flex items-center justify-center">
             <img
-              src={imageError ? fallbackDesktopImage : heroImageDesktop}
+              src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
               alt="Wedding Hero"
               className="object-cover w-full h-full"
               style={{ minHeight: '100vh', maxHeight: '100vh' }}
-              onError={() => setImageError(true)}
+              onLoad={() => console.log('Desktop image loaded successfully')}
+              onError={(e) => console.error('Desktop image failed to load:', e)}
             />
           </div>
         </>
@@ -92,11 +67,12 @@ const HeroSection = () => {
         <>
           <div className={`relative flex-1 h-full w-full order-first`} style={{ minHeight: '60vh' }}>
             <img
-              src={imageError ? fallbackMobileImage : heroImageMobile}
+              src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
               alt="Wedding Hero"
               className="object-cover w-full h-full absolute inset-0 z-0"
               style={{ maxHeight: '100vh', minHeight: '60vh', borderRadius: 0, background: 'rgba(255, 245, 230, 0.7)' }}
-              onError={() => setImageError(true)}
+              onLoad={() => console.log('Mobile image loaded successfully')}
+              onError={(e) => console.error('Mobile image failed to load:', e)}
             />
             <div className="absolute inset-0 bg-gradient-to-b from-[#f7e7d3]/40 via-[#fbeee6]/60 to-[#e6d3c2]/80 pointer-events-none"></div>
             {/* Names and date pinned to bottom */}
@@ -132,4 +108,4 @@ const HeroSection = () => {
   );
 };
 
-export default HeroSection;
+export default HeroSectionDebug;
