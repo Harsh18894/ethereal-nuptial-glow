@@ -32,7 +32,7 @@ const EventsSection = () => {
     {
       title: 'Jaimala',
       description: 'Witness the magical moment when two souls exchange floral garlands in the Jaimala ceremony. A beautiful tradition symbolizing love, respect, and the beginning of forever.',
-      date: 'November 09, 2025',
+      date: 'November 08, 2025',
       time: '9:00 PM',
       venue: 'M.R. Golden Dream Farmhouse, Wave City, Ghaziabad',
       icon: Heart,
