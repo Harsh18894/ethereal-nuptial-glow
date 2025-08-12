@@ -46,10 +46,10 @@ const RSVPSection = () => {
       // Submit to Firebase
       await submitRSVP({
         name: formData.name,
-        email: formData.email || undefined,
+        email: formData.email || '',
         attendance: formData.attendance as 'yes' | 'no',
         guests: parseInt(formData.guests),
-        message: formData.message || undefined
+        message: formData.message || ''
       });
 
       toast({
