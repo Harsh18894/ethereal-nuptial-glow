@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { useToast } from '@/hooks/use-toast';
 import { submitRSVP } from '@/lib/rsvpService';
 import LazyImage from '@/components/LazyImage';
-import venueImage from '@/assets/venue-image.JPG';
+import venueImage from '@/assets/venue-image.png';
 
 const RSVPSection = () => {
   const [isVisible, setIsVisible] = useState(false);
