@@ -8,7 +8,7 @@ import gallery2 from '@/assets/gallery-2.jpg';
 import bridePortrait from '@/assets/bride-portrait.webp';
 import groomPortrait from '@/assets/groom-portrait.webp';
 import heroImage from '@/assets/hero-image.webp';
-import venueImage from '@/assets/venue-image.jpg';
+import venueImage from '@/assets/venue-image.png';
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
