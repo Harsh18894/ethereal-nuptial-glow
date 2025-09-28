@@ -1,26 +1,27 @@
 import { useState, useEffect, useRef, useCallback, memo } from 'react';
-import { MapPin, Phone, Mail, Calendar, Clock, Users } from 'lucide-react';
+import { MapPin, Phone, Calendar, Clock, Users } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { useToast } from '@/hooks/use-toast';
 import { submitRSVP } from '@/lib/rsvpService';
 import LazyImage from '@/components/LazyImage';
+import RSVPModal from '@/components/RSVPModal';
 import venueImage from '@/assets/venue-image.png';
 
 const RSVPSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
-    email: '',
     attendance: '',
     guests: '1',
     message: ''
   });
+  const [modalStatus, setModalStatus] = useState<'loading' | 'success' | 'error' | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const sectionRef = useRef<HTMLDivElement>(null);
-  const { toast } = useToast();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -42,42 +43,46 @@ const RSVPSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Show loading modal
+    setModalStatus('loading');
+    setIsModalOpen(true);
+
     try {
       // Submit to Firebase
       await submitRSVP({
         name: formData.name,
-        email: formData.email || '',
+        email: '',
         attendance: formData.attendance as 'yes' | 'no',
         guests: parseInt(formData.guests),
         message: formData.message || ''
       });
 
-      toast({
-        title: "RSVP Received!",
-        description: "Thank you for your response. We can't wait to celebrate with you!",
-      });
-
-      // Reset form
+      // Show success modal
+      setModalStatus('success');
+      
+      // Reset form after successful submission
       setFormData({
         name: '',
-        email: '',
         attendance: '',
         guests: '1',
         message: ''
       });
     } catch (error) {
       console.error('RSVP submission error:', error);
-      toast({
-        title: "Error",
-        description: "Failed to submit RSVP. Please try again.",
-        variant: "destructive",
-      });
+      setModalStatus('error');
+      setErrorMessage('Failed to submit RSVP. Please try again.');
     }
   };
 
   const handleInputChange = useCallback((field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
   }, []);
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    setModalStatus(null);
+    setErrorMessage('');
+  };
 
   return (
     <section id="rsvp" ref={sectionRef} className="py-20 bg-secondary/20 relative overflow-hidden">
@@ -122,27 +127,15 @@ const RSVPSection = () => {
               </h3>
 
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="name">Full Name *</Label>
-                    <Input
-                      id="name"
-                      value={formData.name}
-                      onChange={(e) => handleInputChange('name', e.target.value)}
-                      required
-                      className="mt-1"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="email">Email Address</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      value={formData.email}
-                      onChange={(e) => handleInputChange('email', e.target.value)}
-                      className="mt-1"
-                    />
-                  </div>
+                <div>
+                  <Label htmlFor="name">Full Name *</Label>
+                  <Input
+                    id="name"
+                    value={formData.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    required
+                    className="mt-1"
+                  />
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
@@ -217,6 +210,7 @@ const RSVPSection = () => {
                 <div className="absolute bottom-4 left-4 text-white">
                   <h4 className="font-heading text-xl font-medium">M.R. Golden Dream Farmhouse</h4>
                   <p className="text-sm opacity-90">Wave City, Ghaziabad</p>
+                  <p className="text-sm opacity-90">Tap to locate venue</p>
                 </div>
               </a>
             </div>
@@ -283,6 +277,14 @@ const RSVPSection = () => {
           </div>
         </div>
       </div>
+
+      {/* RSVP Modal */}
+      <RSVPModal
+        isOpen={isModalOpen}
+        status={modalStatus}
+        onClose={handleModalClose}
+        errorMessage={errorMessage}
+      />
     </section>
   );
 };

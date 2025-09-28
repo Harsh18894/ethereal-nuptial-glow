@@ -65,7 +65,7 @@ const Admin = () => {
       }
     };
     loadStats();
-  }, [responses]);
+  }, []);
 
   if (loading) {
     return (
@@ -89,16 +89,20 @@ const Admin = () => {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-background p-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">RSVP Responses</h1>
-          <Button onClick={exportToCSV} className="flex items-center gap-2">
-            <Download className="w-4 h-4" />
-            Export CSV
-          </Button>
-        </div>
+      return (
+        <div className="min-h-screen bg-background p-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex justify-between items-center mb-8">
+              <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+            </div>
+
+            <div className="space-y-6">
+            <div className="flex justify-end">
+              <Button onClick={exportToCSV} className="flex items-center gap-2">
+                <Download className="w-4 h-4" />
+                Export CSV
+              </Button>
+            </div>
 
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
@@ -180,9 +184,10 @@ const Admin = () => {
             <p className="text-muted-foreground">No RSVP responses yet.</p>
           </div>
         )}
-      </div>
-    </div>
-  );
-};
+            </div>
+          </div>
+        </div>
+      );
+    };
 
 export default Admin;

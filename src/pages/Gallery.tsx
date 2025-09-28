@@ -1,68 +1,145 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useCallback, memo } from 'react';
 import { ArrowLeft, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import Navigation from '@/components/Navigation';
+import { usePerformanceMonitor } from '@/hooks/usePerformance';
 import gallery1 from '@/assets/gallery-1.jpg';
 import gallery2 from '@/assets/gallery-2.jpg';
 import bridePortrait from '@/assets/bride-portrait.webp';
 import groomPortrait from '@/assets/groom-portrait.webp';
 import heroImage from '@/assets/hero-image.webp';
-import venueImage from '@/assets/venue-image.png';
+import engagementImage from '@/assets/engagement.webp';
+import firstDateImage from '@/assets/first-date.webp';
+import firstMeetImage from '@/assets/first-meet.webp';
+import rokafiedImage from '@/assets/rokafied.webp';
+import baraatEventImage from '@/assets/baraat-event.jpg';
+import haldiEventImage from '@/assets/haldi-event.webp';
+import phereEventImage from '@/assets/phere-event.jpg';
+import weddingEventImage from '@/assets/wedding-event.jpg';
 
-const Gallery = () => {
+interface GalleryImage {
+  src: string;
+  alt: string;
+  objectPosition?: string;
+}
+
+const Gallery = memo(() => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  // Performance monitoring
+  usePerformanceMonitor('Gallery');
 
   useEffect(() => {
     setIsVisible(true);
+    loadGalleryImages();
+    
+    // Preload existing website images immediately for faster loading
+    preloadExistingImages();
   }, []);
 
-  // Memoize gallery images to prevent unnecessary re-renders
-  const galleryImages = useMemo(() => [
-    {
-      src: heroImage,
-      alt: 'Beautiful wedding bouquet',
-      category: 'Details'
-    },
-    {
-      src: bridePortrait,
-      alt: 'Manisha - Bridal Portrait',
-      category: 'Portraits'
-    },
-    {
-      src: groomPortrait,
-      alt: 'Harsh - Groom Portrait',
-      category: 'Portraits'
-    },
-    {
-      src: gallery1,
-      alt: 'Elegant table setting',
-      category: 'Reception'
-    },
-    {
-      src: gallery2,
-      alt: 'Romantic couple moment',
-      category: 'Ceremony'
-    },
-    {
-      src: venueImage,
-      alt: 'Garden Manor venue',
-      category: 'Venue'
+  // Preload existing website images immediately
+  const preloadExistingImages = useCallback(() => {
+    const existingImages = [
+      heroImage,
+      bridePortrait,
+      groomPortrait,
+      engagementImage,
+      firstDateImage,
+      firstMeetImage,
+      rokafiedImage,
+      baraatEventImage,
+      haldiEventImage,
+      phereEventImage,
+      weddingEventImage,
+      gallery1,
+      gallery2
+    ];
+
+    existingImages.forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
+  const loadGalleryImages = useCallback(async () => {
+    try {
+      setLoading(true);
+      
+      const images: GalleryImage[] = [
+        {
+          src: heroImage,
+          alt: 'The couple - Hero image',
+          objectPosition: 'top center'
+        },
+        {
+          src: bridePortrait,
+          alt: 'Manisha - Bridal Portrait',
+          objectPosition: 'center top'
+        },
+        {
+          src: groomPortrait,
+          alt: 'Harsh - Groom Portrait',
+          objectPosition: 'center top'
+        },
+        {
+          src: engagementImage,
+          alt: 'Engagement ceremony',
+          objectPosition: 'center'
+        },
+        {
+          src: firstDateImage,
+          alt: 'First date memories',
+          objectPosition: 'center'
+        },
+        {
+          src: firstMeetImage,
+          alt: 'First meeting',
+          objectPosition: 'center'
+        },
+        {
+          src: rokafiedImage,
+          alt: 'Rokafied ceremony',
+          objectPosition: 'center'
+        }
+      ];
+      
+      const galleryPhotos = Array.from({ length: 25 }, (_, i) => ({
+        name: `photo-${i + 1}.webp`,
+        objectPosition: i === 1 || i === 2 ? 'top' : i === 14 ? 'center top' : 'center'
+      }));
+
+      const existingPhotos = await Promise.all(
+        galleryPhotos.map(async (photo, index) => {
+          return new Promise<GalleryImage | null>((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+              resolve({
+                src: `/gallery-photos/${photo.name}`,
+                alt: `Wedding Photo ${index + 1}`,
+                objectPosition: photo.objectPosition
+              });
+            };
+            img.onerror = () => resolve(null);
+            img.src = `/gallery-photos/${photo.name}`;
+          });
+        })
+      );
+
+      const validPhotos = existingPhotos.filter((photo): photo is GalleryImage => photo !== null);
+      images.push(...validPhotos);
+      
+      setGalleryImages(images);
+      setLoading(false);
+      
+    } catch (error) {
+      console.error('Error loading gallery images:', error);
+      setLoading(false);
     }
-  ], []);
-
-  // Memoize categories
-  const categories = useMemo(() => ['All', 'Portraits', 'Ceremony', 'Reception', 'Details', 'Venue'], []);
-
-  // Memoize filtered images
-  const filteredImages = useMemo(() =>
-    activeCategory === 'All'
-      ? galleryImages
-      : galleryImages.filter(img => img.category === activeCategory),
-    [activeCategory, galleryImages]
-  );
+  }, []);
 
   const openLightbox = useCallback((index: number) => {
     setSelectedImage(index);
@@ -105,12 +182,6 @@ const Gallery = () => {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [selectedImage, closeLightbox, navigateImage]);
 
-  const handleCategoryChange = useCallback((category: string) => {
-    setActiveCategory(category);
-  }, []);
-
-
-
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -145,62 +216,44 @@ const Gallery = () => {
         </div>
       </section>
 
-      {/* Category Filter */}
-      <section className="py-8 border-b border-border">
-        <div className="container mx-auto px-6">
-          <div
-            className={`flex flex-wrap justify-center gap-4 transition-all duration-1000 delay-300 transform ${isVisible
-              ? 'translate-y-0 opacity-100'
-              : 'translate-y-8 opacity-0'
-              }`}
-          >
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant={activeCategory === category ? "default" : "outline"}
-                onClick={() => handleCategoryChange(category)}
-                className={`rounded-full px-6 transition-all duration-300 ${activeCategory === category
-                  ? 'bg-gradient-to-r from-accent to-rose text-white hover:from-accent/90 hover:to-rose/90'
-                  : 'hover:bg-accent/10 hover:text-accent'
-                  }`}
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Gallery Grid */}
       <section className="py-16">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredImages.map((image, index) => (
-              <div
-                key={index}
-                className={`group cursor-pointer transition-all duration-700 delay-${index * 100} transform ${isVisible
-                  ? 'translate-y-0 opacity-100'
-                  : 'translate-y-8 opacity-0'
-                  }`}
-                onClick={() => openLightbox(galleryImages.indexOf(image))}
-              >
-                <div className="relative overflow-hidden rounded-2xl hover-lift">
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
-                    <span className="inline-block px-3 py-1 bg-accent/80 rounded-full text-sm font-medium">
-                      {image.category}
-                    </span>
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent mx-auto"></div>
+              <p className="mt-4 text-muted-foreground">Loading gallery images...</p>
+            </div>
+          ) : galleryImages.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-muted-foreground">Loading gallery images...</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {galleryImages.map((image, index) => (
+                <div
+                  key={index}
+                  className={`group cursor-pointer transition-all duration-700 delay-${index * 100} transform ${isVisible
+                    ? 'translate-y-0 opacity-100'
+                    : 'translate-y-8 opacity-0'
+                    }`}
+                  onClick={() => openLightbox(index)}
+                >
+                  <div className="relative overflow-hidden rounded-2xl hover-lift">
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      className="w-full h-80 object-cover transition-transform duration-700 group-hover:scale-110"
+                      style={{ objectPosition: image.objectPosition || 'center' }}
+                      loading="eager"
+                      decoding="async"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -238,17 +291,17 @@ const Gallery = () => {
             </Button>
 
             {/* Image */}
-            <div className="relative max-w-5xl max-h-[90vh]">
+            <div className="relative max-w-5xl max-h-[90vh] w-full h-full flex items-center justify-center">
               <img
                 src={galleryImages[selectedImage].src}
                 alt={galleryImages[selectedImage].alt}
-                className="max-w-full max-h-full object-contain rounded-xl animate-scale-in"
+                className="max-w-full max-h-full object-contain rounded-xl"
+                style={{ maxWidth: '100%', maxHeight: '100%', width: 'auto', height: 'auto' }}
               />
 
               {/* Image Info */}
               <div className="absolute bottom-4 left-4 glass-effect rounded-xl px-4 py-2">
                 <p className="text-white font-medium">{galleryImages[selectedImage].alt}</p>
-                <p className="text-white/70 text-sm">{galleryImages[selectedImage].category}</p>
               </div>
             </div>
 
@@ -263,6 +316,8 @@ const Gallery = () => {
       )}
     </div>
   );
-};
+});
 
 export default Gallery;
+
+Gallery.displayName = 'Gallery';

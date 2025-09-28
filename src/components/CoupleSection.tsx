@@ -1,12 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
 import bridePortrait from '@/assets/bride-portrait.webp';
 import groomPortrait from '@/assets/groom-portrait.webp';
+import { VideoIntroModal } from './VideoIntroModal';
+import { VideoIntroButton } from './VideoIntroButton';
+import { useAudioControl } from '@/hooks/useAudioControl';
+import { OptimizedImage } from './OptimizedImage';
 
 const CoupleSection = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
+  const { pauseMusic, resumeMusic } = useAudioControl();
 
   useEffect(() => {
+    // Preload critical images immediately
+    [bridePortrait, groomPortrait].forEach(src => {
+      const img = new Image();
+      img.src = src;
+    });
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -22,6 +34,14 @@ const CoupleSection = () => {
 
     return () => observer.disconnect();
   }, []);
+
+  const handleVideoStart = () => {
+    pauseMusic();
+  };
+
+  const handleVideoEnd = () => {
+    resumeMusic();
+  };
 
   return (
     <section ref={sectionRef} className="py-20 bg-secondary/30">
@@ -42,6 +62,16 @@ const CoupleSection = () => {
               : 'scale-x-0 opacity-0'
               }`}
           ></div>
+          
+          {/* Video Intro Button */}
+          <div
+            className={`mt-8 flex justify-center transition-all duration-1000 delay-400 transform ${isVisible
+              ? 'translate-y-0 opacity-100'
+              : 'translate-y-8 opacity-0'
+              }`}
+          >
+            <VideoIntroButton onClick={() => setIsVideoModalOpen(true)} />
+          </div>
         </div>
 
         {/* Couple Cards */}
@@ -55,10 +85,11 @@ const CoupleSection = () => {
           >
             <div className="relative group mb-8">
               <div className="relative overflow-hidden rounded-2xl hover-lift">
-                <img
+                <OptimizedImage
                   src={bridePortrait}
-                  alt="Emma - The Bride"
-                  className="w-full h-96 object-cover transition-transform duration-700 group-hover:scale-105"
+                  alt="Manisha - The Bride"
+                  objectPosition="center top"
+                  className="w-full h-96"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
@@ -73,7 +104,7 @@ const CoupleSection = () => {
             <p className="text-accent font-medium mb-4">The Bride</p>
             <p className="text-muted-foreground leading-relaxed max-w-md mx-auto">
               A free spirit with a love for travel and photography.
-              Manisha brings creativity and warmth to everything she touches, from crunching invoices
+              Manisha brings creativity and warmth to everything she touches, from crunching numbers
               to editing instagram posts.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-2">
@@ -92,10 +123,11 @@ const CoupleSection = () => {
           >
             <div className="relative group mb-8">
               <div className="relative overflow-hidden rounded-2xl hover-lift">
-                <img
+                <OptimizedImage
                   src={groomPortrait}
-                  alt="James - The Groom"
-                  className="w-full h-96 object-cover transition-transform duration-700 group-hover:scale-105"
+                  alt="Harsh - The Groom"
+                  objectPosition="center top"
+                  className="w-full h-96"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
@@ -109,9 +141,9 @@ const CoupleSection = () => {
             </h3>
             <p className="text-accent font-medium mb-4">The Groom</p>
             <p className="text-muted-foreground leading-relaxed max-w-md mx-auto">
-              A product manager with a passion for technology, music, and cooking.
-              Harsh combines analytical thinking with creative expression, whether he's
-              building the next great app or perfecting his pasta recipe.
+              A romantic with a passion for music, cooking, and technology.
+              Harsh combines logical thinking with creative expression, whether he's
+              learning the next song or perfecting his pasta recipe.
             </p>
             <div className="mt-6 flex flex-wrap justify-center gap-2">
               <span className="px-3 py-1 bg-accent/20 text-accent rounded-full text-sm">Technology</span>
@@ -121,6 +153,15 @@ const CoupleSection = () => {
           </div>
         </div>
       </div>
+
+      {/* Video Intro Modal */}
+      <VideoIntroModal
+        isOpen={isVideoModalOpen}
+        onClose={() => setIsVideoModalOpen(false)}
+        videoSrc="/intro-video.mp4"
+        onVideoStart={handleVideoStart}
+        onVideoEnd={handleVideoEnd}
+      />
     </section>
   );
 };
