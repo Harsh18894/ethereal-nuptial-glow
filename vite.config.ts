@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import { componentTagger } from "lovable-tagger";
+// import { componentTagger } from "lovable-tagger";
 import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://vitejs.dev/config/
@@ -11,15 +11,13 @@ export default defineConfig(({ mode }) => ({
     host: "::",
     port: 8080,
     hmr: {
-      overlay: false, // Disable error overlay for better performance
+      overlay: false,
     },
   },
   plugins: [
     react({
       // Enable SWC optimizations
     }),
-    mode === 'development' &&
-    componentTagger(),
     mode === 'analyze' &&
     visualizer({
       filename: 'dist/stats.html',
@@ -34,9 +32,9 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    target: 'esnext',
-    minify: 'terser',
-    cssMinify: true,
+    target: mode === 'production' ? 'es2015' : 'esnext',
+    minify: mode === 'production' ? 'terser' : false,
+    cssMinify: mode === 'production',
     sourcemap: mode === 'development',
     rollupOptions: {
       output: {
@@ -90,16 +88,16 @@ export default defineConfig(({ mode }) => ({
         },
       },
     },
-    terserOptions: {
+    terserOptions: mode === 'production' ? {
       compress: {
-        drop_console: mode === 'production',
-        drop_debugger: mode === 'production',
-        pure_funcs: mode === 'production' ? ['console.log', 'console.info'] : [],
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.info'],
       },
       mangle: {
         safari10: true,
       },
-    },
+    } : undefined,
     chunkSizeWarningLimit: 1000,
   },
   optimizeDeps: {
