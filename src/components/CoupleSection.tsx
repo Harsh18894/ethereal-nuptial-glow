@@ -89,7 +89,7 @@ const CoupleSection = () => {
                   src={bridePortrait}
                   alt="Manisha - The Bride"
                   objectPosition="center top"
-                  className="w-full h-96"
+                  className="w-full h-full"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
@@ -127,7 +127,7 @@ const CoupleSection = () => {
                   src={groomPortrait}
                   alt="Harsh - The Groom"
                   objectPosition="center top"
-                  className="w-full h-96"
+                  className="w-full h-full"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
