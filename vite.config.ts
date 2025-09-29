@@ -6,7 +6,7 @@ import { visualizer } from 'rollup-plugin-visualizer';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: '/',
+  base: './',
   server: {
     host: "::",
     port: 8080,
@@ -32,30 +32,15 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    target: mode === 'production' ? 'es2015' : 'esnext',
-    minify: mode === 'production' ? 'esbuild' : false,
-    cssMinify: mode === 'production',
+    target: 'esnext',
+    minify: false,
+    cssMinify: false,
     sourcemap: mode === 'development',
-    commonjsOptions: {
-      include: [/node_modules/],
-    },
-      rollupOptions: {
-        output: {
-          // Simplified chunking to avoid React loading issues
-          manualChunks: (id) => {
-            if (id.includes('node_modules')) {
-              // Keep React and React-DOM together
-              if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
-                return 'react-vendor';
-              }
-              if (id.includes('firebase')) {
-                return 'firebase-vendor';
-              }
-              return 'vendor';
-            }
-          },
-        },
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
       },
+    },
     chunkSizeWarningLimit: 1000,
   },
   optimizeDeps: {
