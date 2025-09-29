@@ -33,71 +33,29 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     target: mode === 'production' ? 'es2015' : 'esnext',
-    minify: mode === 'production' ? 'terser' : false,
+    minify: mode === 'production' ? 'esbuild' : false,
     cssMinify: mode === 'production',
     sourcemap: mode === 'development',
-    rollupOptions: {
-      output: {
-        manualChunks: (id) => {
-          // Vendor chunks
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom')) {
-              return 'react-vendor';
-            }
-            if (id.includes('firebase')) {
-              return 'firebase-vendor';
-            }
-            if (id.includes('lucide-react')) {
-              return 'icons-vendor';
-            }
-            if (id.includes('@tanstack')) {
-              return 'query-vendor';
-            }
-            return 'vendor';
-          }
-          
-          // Page chunks
-          if (id.includes('/pages/')) {
-            return 'pages';
-          }
-          
-          // Component chunks
-          if (id.includes('/components/')) {
-            return 'components';
-          }
-        },
-        chunkFileNames: (chunkInfo) => {
-          const facadeModuleId = chunkInfo.facadeModuleId
-            ? chunkInfo.facadeModuleId.split('/').pop()?.replace('.tsx', '').replace('.ts', '')
-            : 'chunk';
-          return `js/[name]-[hash].js`;
-        },
-        assetFileNames: (assetInfo) => {
-          const info = assetInfo.name?.split('.') || [];
-          const ext = info[info.length - 1];
-          if (/\.(css)$/.test(assetInfo.name || '')) {
-            return `css/[name]-[hash].${ext}`;
-          }
-          if (/\.(png|jpe?g|svg|gif|tiff|bmp|ico)$/i.test(assetInfo.name || '')) {
-            return `images/[name]-[hash].${ext}`;
-          }
-          if (/\.(mp3|wav|ogg|m4a)$/i.test(assetInfo.name || '')) {
-            return `audio/[name]-[hash].${ext}`;
-          }
-          return `assets/[name]-[hash].${ext}`;
-        },
-      },
+    commonjsOptions: {
+      include: [/node_modules/],
     },
-    terserOptions: mode === 'production' ? {
-      compress: {
-        drop_console: true,
-        drop_debugger: true,
-        pure_funcs: ['console.log', 'console.info'],
+      rollupOptions: {
+        output: {
+          // Simplified chunking to avoid React loading issues
+          manualChunks: (id) => {
+            if (id.includes('node_modules')) {
+              // Keep React and React-DOM together
+              if (id.includes('react') || id.includes('react-dom') || id.includes('react-router')) {
+                return 'react-vendor';
+              }
+              if (id.includes('firebase')) {
+                return 'firebase-vendor';
+              }
+              return 'vendor';
+            }
+          },
+        },
       },
-      mangle: {
-        safari10: true,
-      },
-    } : undefined,
     chunkSizeWarningLimit: 1000,
   },
   optimizeDeps: {
