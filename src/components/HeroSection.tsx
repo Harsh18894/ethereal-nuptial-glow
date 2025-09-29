@@ -82,7 +82,7 @@ const HeroSection = () => {
             <img
               src={imageError ? fallbackDesktopImage : heroImageDesktop}
               alt="Wedding Hero"
-              className="object-cover w-full h-full"
+              className="absolute inset-0 w-full h-full object-cover object-[50%_22%]"
               style={{ minHeight: '100vh', maxHeight: '100vh' }}
               onError={() => setImageError(true)}
             />
